@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profesyonel Sensör Konfigürasyon Düzenleyicisi</title>
+    <style>
+        :root {
+            --bg-color: #f4f4f9;
+            --container-bg: #ffffff;
+            --text-color: #333333;
+            --border-color: #ccc;
+            --card-bg: #e9ecef;
+            --card-text: #333333;
+            --tab-bg: #e0e0e0;
+            --tab-active: #ffffff;
+            --primary: #007bff;
+            --success: #28a745;
+            --danger: #dc3545;
+            --sub-card: #f8f9fa;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #121212;
+            --container-bg: #1e1e1e;
+            --text-color: #e0e0e0;
+            --border-color: #444;
+            --card-bg: #2d2d2d;
+            --card-text: #e0e0e0;
+            --tab-bg: #2a2a2a;
+            --tab-active: #1e1e1e;
+            --primary: #115293;
+            --success: #1e7e34;
+            --danger: #a71d2a;
+            --sub-card: #252525;
+        }
+
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background-color: var(--bg-color); 
+            color: var(--text-color); 
+            margin: 0; 
+            padding: 20px; 
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .container { 
+            max-width: 1100px; 
+            margin: 0 auto; 
+            background: var(--container-bg); 
+            padding: 30px; 
+            border-radius: 8px; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
+            position: relative;
+        }
+
+        h2 { margin-top: 0; }
+
+        .theme-toggle {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            background: none;
+            border: 2px solid var(--border-color);
+            color: var(--text-color);
+            padding: 6px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 5px;
+            border-bottom: 2px solid var(--border-color);
+            margin-bottom: 20px;
+        }
+        .tab-btn {
+            padding: 10px 20px;
+            background: var(--tab-bg);
+            border: none;
+            border-top-left-radius: 6px;
+            border-top-right-radius: 6px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: bold;
+            color: var(--text-color);
+        }
+        .tab-btn.active {
+            background: var(--tab-active);
+            border: 2px solid var(--border-color);
+            border-bottom: none;
+            margin-bottom: -2px;
+            color: var(--primary);
+        }
+
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: 600; font-size: 13px; }
+        input, select, textarea { 
+            width: 100%; 
+            padding: 9px; 
+            box-sizing: border-box; 
+            border: 1px solid var(--border-color); 
+            border-radius: 4px; 
+            background: var(--container-bg);
+            color: var(--text-color);
+            font-size: 14px;
+        }
+
+        .row { display: flex; gap: 15px; }
+        .col { flex: 1; }
+
+        .btn { 
+            padding: 8px 16px; 
+            border: none; 
+            border-radius: 4px; 
+            font-size: 13px; 
+            cursor: pointer; 
+            color: white; 
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn-success { background-color: var(--success); padding: 12px 20px; font-size: 16px; }
+        .btn-primary { background-color: var(--primary); }
+        .btn-danger { background-color: var(--danger); }
+        .btn-warning { background-color: #f0ad4e; }
+        .btn-sm { padding: 5px 10px; font-size: 12px; }
+
+        .dynamic-section {
+            background: var(--sub-card);
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        .item-row {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            background: var(--container-bg);
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 10px;
+        }
+
+        .sensor-card { 
+            background: var(--card-bg); 
+            padding: 12px 15px; 
+            border-radius: 6px; 
+            margin-bottom: 10px; 
+            border: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .category-title { 
+            background: var(--primary); 
+            color: white; 
+            padding: 8px 12px; 
+            border-radius: 4px; 
+            margin-top: 20px; 
+            font-weight: bold; 
+        }
+        #message { margin-top: 15px; font-weight: bold; font-size: 14px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <button class="theme-toggle" onclick="toggleTheme()">🌓 Tema Değiş</button>
+    <h2>Sensor Konfigürasyon Sihirbazı</h2>
+
+    <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('fileTab', this)">📁 File Management</button>
+        <button class="tab-btn" onclick="switchTab('sensorsTab', this)">📊 Sensor List</button>
+        <button class="tab-btn" id="addTabBtn" onclick="switchTab('addNewTab', this)">➕ Add / Edit Sensor</button>
+    </div>
+
+    <div id="message"></div>
+
+    <!-- 1. FILE TAB -->
+    <div id="fileTab" class="tab-content active">
+        <h3>Toplu Dosya İşlemleri</h3>
+        <p>Bilgisayarınızdan eksiksiz bir <code>sensors.json</code> dosyası yükleyebilir veya mevcut konfigürasyonu indirebilirsiniz.</p>
+        <div class="form-group">
+            <label>JSON Dosyası Seç:</label>
+            <input type="file" id="jsonFile" accept=".json" onchange="uploadFullFile(event)">
+        </div>
+        <br>
+        <a href="/api/download" class="btn btn-primary" target="_blank">💾 sensors.json Dosyasını İndir</a>
+    </div>
+
+    <!-- 2. SENSORS LIST TAB -->
+    <div id="sensorsTab" class="tab-content">
+        <h3>Kayıtlı Sensörler</h3>
+        <div id="sensorList">Yükleniyor...</div>
+    </div>
+
+    <!-- 3. ADD / EDIT SENSOR WIZARD -->
+    <div id="addNewTab" class="tab-content">
+        <h3 id="formTitle">Yeni Sensör Ekle</h3>
+        <form id="sensorForm" onsubmit="saveSensor(event)">
+            <input type="hidden" id="editIndex" value="">
+
+            <div class="row">
+                <div class="col form-group">
+                    <label>Kategori Seçin:</label>
+                    <select id="catInput" required>
+                        <option value="Flowmeters">Flowmeters</option>
+                        <option value="Powermeters">Powermeters</option>
+                        <option value="Shaftmeters">Shaftmeters</option>
+                        <option value="GPS">GPS</option>
+                    </select>
+                </div>
+                <div class="col form-group">
+                    <label>Üretici (Maker):</label>
+                    <input type="text" id="makerInput" required placeholder="Örn: Endress, Schneider, Trelleborg">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col form-group">
+                    <label>Model:</label>
+                    <input type="text" id="modelInput" required placeholder="Örn: P100, PM5560">
+                </div>
+                <div class="col form-group">
+                    <label>Protokol:</label>
+                    <select id="protocolInput" required onchange="handleProtocolChange()">
+                        <option value="MODBUSTCP">MODBUSTCP</option>
+                        <option value="MODBUSRTU">MODBUSRTU</option>
+                        <option value="NMEA0183">NMEA0183</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col form-group">
+                    <label>Port / Haberleşme:</label>
+                    <select id="portInput" required>
+                        <option value="">-- Port Seçiniz --</option>
+                        <option value="RS485">RS485</option>
+                        <option value="RS422">RS422</option>
+                        <option value="TCP">TCP / Ethernet</option>
+                        <option value="USB">USB</option>
+                    </select>
+                </div>
+                <div class="col form-group">
+                    <label>Baud Rate:</label>
+                    <input type="text" id="baudInput" placeholder="Örn: 9600 8E1, 4800 8N1">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col form-group">
+                    <label>Simüle Türü:</label>
+                    <input type="text" id="simulateInput" placeholder="Örn: TCP, RTU">
+                </div>
+                <div class="col form-group">
+                    <label>Unit ID / Adres Base:</label>
+                    <input type="text" id="unitidInput" placeholder="Örn: 1">
+                </div>
+                <div class="col form-group">
+                    <label>Cihaz Tipi (Type):</label>
+                    <input type="text" id="typeInput" placeholder="Örn: Mass, Multimeter, PRT, GPS">
+                </div>
+            </div>
+
+            <!-- MODBUS FIELDS ALANI -->
+            <div class="dynamic-section modbus-section">
+                <h4>Fields (Ölçüm Parametreleri / Registerlar)</h4>
+                <div id="fieldsContainer"></div>
+                <button type="button" class="btn btn-primary btn-sm" onclick="addFieldRow()">+ Yeni Field Ekle</button>
+            </div>
+
+            <!-- MODBUS SETUP ALANI -->
+            <div class="dynamic-section modbus-section">
+                <h4>Setup (Konfigürasyon Parametreleri)</h4>
+                <div id="setupContainer"></div>
+                <button type="button" class="btn btn-primary btn-sm" onclick="addSetupRow()">+ Yeni Setup Ekle</button>
+            </div>
+
+            <!-- NMEA SENTENCES ALANI -->
+            <div class="dynamic-section nmea-section" id="nmeaSection" style="display:none;">
+                <h4>NMEA Sentences (Cümleler ve Alanlar)</h4>
+                <div id="sentencesContainer"></div>
+                <button type="button" class="btn btn-primary btn-sm" onclick="addSentenceBlock()">+ Yeni Sentence Ekle</button>
+            </div>
+
+            <button type="submit" class="btn btn-success" id="saveBtn">Sensörü Eksiksiz Kaydet</button>
+            <button type="button" class="btn btn-warning" style="background:#6c757d;" onclick="resetForm()">İptal / Temizle</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    function toggleTheme() {
+        const cur = document.documentElement.getAttribute('data-theme');
+        const next = cur === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+    }
+
+    function switchTab(tabId, btnElement) {
+        document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+        document.getElementById(tabId).classList.add('active');
+        btnElement.classList.add('active');
+        if (tabId === 'sensorsTab') loadSensors();
+    }
+
+    function handleProtocolChange() {
+        const proto = document.getElementById('protocolInput').value;
+        const modbusSections = document.querySelectorAll('.modbus-section');
+        const nmeaSection = document.getElementById('nmeaSection');
+
+        if (proto === 'NMEA0183') {
+            nmeaSection.style.display = 'block';
+            modbusSections.forEach(el => el.style.display = 'none');
+        } else {
+            nmeaSection.style.display = 'none';
+            modbusSections.forEach(el => el.style.display = 'block');
+        }
+    }
+
+    let cachedData = {};
+
+    function addFieldRow(data = {}) {
+        const container = document.getElementById('fieldsContainer');
+        const index = container.children.length + 1;
+        const div = document.createElement('div');
+        div.className = 'item-row';
+        div.innerHTML = `
+            <div style="flex:0.5"><label>ID</label><input type="text" class="f-id" value="${data.id || index}"></div>
+            <div style="flex:1"><label>İsim (Name)</label><input type="text" class="f-name" value="${data.name || ''}" placeholder="mass"></div>
+            <div style="flex:1"><label>Adres</label><input type="text" class="f-address" value="${data.address || ''}" placeholder="2007"></div>
+            <div style="flex:1"><label>Veri Tipi</label><input type="text" class="f-data" value="${data.data || 'float'}" placeholder="float"></div>
+            <div style="flex:1"><label>Byte Order</label><input type="text" class="f-byte" value="${data.byteorder || '1032'}" placeholder="1032"></div>
+            <div style="flex:0.5"><label>Min</label><input type="number" class="f-min" value="${data.min !== undefined ? data.min : 0}"></div>
+            <div style="flex:0.5"><label>Max</label><input type="number" class="f-max" value="${data.max !== undefined ? data.max : 100}"></div>
+            <div style="flex:0.5; text-align:center;"><label>&nbsp;</label><button type="button" class="btn btn-danger btn-sm" onclick="this.parentElement.parentElement.remove()">X</button></div>
+        `;
+        container.appendChild(div);
+    }
+
+    function addSetupRow(data = {}) {
+        const container = document.getElementById('setupContainer');
+        const index = container.children.length + 1;
+        const div = document.createElement('div');
+        div.className = 'item-row';
+        div.innerHTML = `
+            <div style="flex:0.5"><label>ID</label><input type="text" class="s-id" value="${data.id || index}"></div>
+            <div style="flex:1"><label>İsim</label><input type="text" class="s-name" value="${data.name || ''}" placeholder="direction"></div>
+            <div style="flex:1"><label>Adres</label><input type="text" class="s-address" value="${data.address || ''}" placeholder="5501"></div>
+            <div style="flex:1"><label>Veri Tipi</label><input type="text" class="s-data" value="${data.data || 'integer'}" placeholder="integer"></div>
+            <div style="flex:1"><label>Açıklama</label><input type="text" class="s-desc" value="${data.desc || ''}" placeholder="Açıklama"></div>
+            <div style="flex:0.5; text-align:center;"><label>&nbsp;</label><button type="button" class="btn btn-danger btn-sm" onclick="this.parentElement.parentElement.remove()">X</button></div>
+        `;
+        container.appendChild(div);
+    }
+
+    function addSentenceBlock(sentenceData = {}) {
+        const container = document.getElementById('sentencesContainer');
+        const div = document.createElement('div');
+        div.className = 'item-row sentence-block';
+        div.style.flexDirection = 'column';
+        div.style.alignItems = 'stretch';
+        
+        div.innerHTML = `
+            <div style="display:flex; gap:10px; align-items:center; margin-bottom:8px;">
+                <div style="flex:2;"><label>Sentence Header</label><input type="text" class="s-header" value="${sentenceData.header || '$GPRMC'}" placeholder="$GPRMC"></div>
+                <div style="flex:0.5; text-align:right;"><label>&nbsp;</label><button type="button" class="btn btn-danger btn-sm" onclick="this.closest('.sentence-block').remove()">Cümleyi Sil</button></div>
+            </div>
+            <div class="sentence-fields-container" style="padding-left:15px; border-left:2px solid var(--primary);">
+                <label>Sentence Fields (Cümlenin Alanları)</label>
+                <div class="fields-list"></div>
+                <button type="button" class="btn btn-primary btn-sm" style="margin-top:5px;" onclick="addSentenceField(this)">+ Field Ekle</button>
+            </div>
+        `;
+        container.appendChild(div);
+
+        const fieldsList = div.querySelector('.fields-list');
+        if (Array.isArray(sentenceData.fields)) {
+            sentenceData.fields.forEach(f => addSentenceFieldRow(fieldsList, f));
+        }
+    }
+
+    function addSentenceField(button) {
+        const fieldsList = button.previousElementSibling;
+        addSentenceFieldRow(fieldsList, {});
+    }
+
+    function addSentenceFieldRow(fieldsList, data = {}) {
+        const row = document.createElement('div');
+        row.className = 'item-row';
+        row.innerHTML = `
+            <div style="flex:1"><label>Key</label><input type="text" class="sf-key" value="${data.key || ''}" placeholder="rpm"></div>
+            <div style="flex:1"><label>Field Index</label><input type="number" class="sf-index" value="${data.field_index || 1}" placeholder="1"></div>
+            <div style="flex:1"><label>Type</label><input type="text" class="sf-type" value="${data.type || 'float'}" placeholder="float"></div>
+            <div style="flex:1"><label>Unit</label><input type="text" class="sf-unit" value="${data.unit || ''}" placeholder="knots"></div>
+            <div style="flex:0.5; text-align:center;"><label>&nbsp;</label><button type="button" class="btn btn-danger btn-sm" onclick="this.parentElement.parentElement.remove()">X</button></div>
+        `;
+        fieldsList.appendChild(row);
+    }
+
+    async function loadSensors() {
+        try {
+            const res = await fetch('/api/sensors');
+            cachedData = await res.json();
+            const listDiv = document.getElementById('sensorList');
+            
+            if (Object.keys(cachedData).length === 0) {
+                listDiv.innerHTML = '<p>Kayıtlı sensör bulunmuyor.</p>';
+                return;
+            }
+
+            let html = '';
+            for (const category in cachedData) {
+                if (!Array.isArray(cachedData[category]) || cachedData[category].length === 0) continue;
+
+                html += `<div class="category-title">${category} (${cachedData[category].length})</div>`;
+                cachedData[category].forEach((sensor, idx) => {
+                    html += `
+                        <div class="sensor-card">
+                            <div>
+                                <strong>#${idx + 1} - ${sensor.maker || ''} ${sensor.model || ''}</strong><br>
+                                <small><b>Protokol:</b> ${sensor.protocol || '-'} | <b>Tip:</b> ${sensor.type || '-'}</small>
+                            </div>
+                            <div>
+                                <button class="btn btn-warning btn-sm" onclick="editSensor('${category}', ${idx})">Edit</button>
+                                <button class="btn btn-danger btn-sm" onclick="deleteSensor('${category}', ${idx})">Delete</button>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+            listDiv.innerHTML = html;
+        } catch (err) { console.error(err); }
+    }
+
+    function editSensor(category, index) {
+        const sensor = cachedData[category][index];
+        
+        document.getElementById('editIndex').value = index;
+        document.getElementById('catInput').value = category;
+        document.getElementById('makerInput').value = sensor.maker || '';
+        document.getElementById('modelInput').value = sensor.model || '';
+        document.getElementById('protocolInput').value = sensor.protocol || 'MODBUSTCP';
+        document.getElementById('portInput').value = sensor.port || '';
+        document.getElementById('baudInput').value = sensor.baud || '';
+        document.getElementById('simulateInput').value = sensor.simulate || '';
+        document.getElementById('unitidInput').value = sensor.unitid || '';
+        document.getElementById('typeInput').value = sensor.type || '';
+
+        handleProtocolChange();
+
+        document.getElementById('fieldsContainer').innerHTML = '';
+        if (Array.isArray(sensor.fields)) {
+            sensor.fields.forEach(f => addFieldRow(f));
+        }
+
+        document.getElementById('setupContainer').innerHTML = '';
+        if (Array.isArray(sensor.setup)) {
+            sensor.setup.forEach(s => addSetupRow(s));
+        }
+
+        document.getElementById('sentencesContainer').innerHTML = '';
+        if (Array.isArray(sensor.sentences)) {
+            sensor.sentences.forEach(s => addSentenceBlock(s));
+        }
+
+        document.getElementById('formTitle').innerText = `Sensör Düzenle: ${sensor.maker} ${sensor.model}`;
+        document.getElementById('saveBtn').innerText = 'Değişiklikleri Güncelle';
+        document.getElementById('addTabBtn').innerText = '✏️ Edit Sensor';
+
+        switchTab('addNewTab', document.querySelectorAll('.tab-btn')[2]);
+    }
+
+    function resetForm() {
+        document.getElementById('sensorForm').reset();
+        document.getElementById('editIndex').value = '';
+        document.getElementById('fieldsContainer').innerHTML = '';
+        document.getElementById('setupContainer').innerHTML = '';
+        document.getElementById('sentencesContainer').innerHTML = '';
+        document.getElementById('formTitle').innerText = 'Yeni Sensör Ekle';
+        document.getElementById('saveBtn').innerText = 'Sensörü Eksiksiz Kaydet';
+        document.getElementById('addTabBtn').innerText = '➕ Add / Edit Sensor';
+        handleProtocolChange();
+    }
+
+    async function saveSensor(e) {
+        e.preventDefault();
+        const category = document.getElementById('catInput').value;
+        const editIndex = document.getElementById('editIndex').value;
+        const protocol = document.getElementById('protocolInput').value;
+
+        let sensorObj = {
+            maker: document.getElementById('makerInput').value.trim(),
+            model: document.getElementById('modelInput').value.trim(),
+            protocol: protocol,
+            port: document.getElementById('portInput').value.trim(),
+            baud: document.getElementById('baudInput').value.trim(),
+            simulate: document.getElementById('simulateInput').value.trim(),
+            unitid: document.getElementById('unitidInput').value.trim(),
+            type: document.getElementById('typeInput').value.trim()
+        };
+
+        Object.keys(sensorObj).forEach(key => { if(!sensorObj[key]) delete sensorObj[key]; });
+
+        if (protocol === 'NMEA0183') {
+            const sentences = [];
+            document.querySelectorAll('.sentence-block').forEach(block => {
+                const header = block.querySelector('.s-header').value.trim();
+                const fields = [];
+                block.querySelectorAll('.fields-list .item-row').forEach(row => {
+                    fields.push({
+                        key: row.querySelector('.sf-key').value.trim(),
+                        field_index: parseInt(row.querySelector('.sf-index').value) || 1,
+                        type: row.querySelector('.sf-type').value.trim(),
+                        unit: row.querySelector('.sf-unit').value.trim()
+                    });
+                });
+                sentences.push({ header, fields });
+            });
+            if(sentences.length > 0) sensorObj.sentences = sentences;
+        } else {
+            const fields = [];
+            document.querySelectorAll('#fieldsContainer .item-row').forEach(row => {
+                fields.push({
+                    id: parseInt(row.querySelector('.f-id').value) || 1,
+                    name: row.querySelector('.f-name').value.trim(),
+                    address: row.querySelector('.f-address').value.trim(),
+                    data: row.querySelector('.f-data').value.trim(),
+                    byteorder: row.querySelector('.f-byte').value.trim(),
+                    min: parseFloat(row.querySelector('.f-min').value) || 0,
+                    max: parseFloat(row.querySelector('.f-max').value) || 100
+                });
+            });
+            if(fields.length > 0) sensorObj.fields = fields;
+
+            const setup = [];
+            document.querySelectorAll('#setupContainer .item-row').forEach(row => {
+                setup.push({
+                    id: parseInt(row.querySelector('.s-id').value) || 1,
+                    name: row.querySelector('.s-name').value.trim(),
+                    address: row.querySelector('.s-address').value.trim(),
+                    data: row.querySelector('.s-data').value.trim(),
+                    desc: row.querySelector('.s-desc').value.trim()
+                });
+            });
+            if(setup.length > 0) sensorObj.setup = setup;
+        }
+
+        try {
+            const res = await fetch('/api/sensor', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    category: category,
+                    sensorData: sensorObj,
+                    editIndex: editIndex !== "" ? parseInt(editIndex) : null
+                })
+            });
+            const result = await res.json();
+            const msg = document.getElementById('message');
+            if (result.success) {
+                msg.style.color = 'green';
+                msg.innerText = result.message;
+                resetForm();
+                switchTab('sensorsTab', document.querySelectorAll('.tab-btn')[1]);
+            } else {
+                alert('Hata: ' + result.message);
+            }
+        } catch (err) { alert('Bağlantı hatası.'); }
+    }
+
+    async function deleteSensor(category, index) {
+        if (!confirm('Bu sensörü silmek istediğinize emin misiniz?')) return;
+        try {
+            const res = await fetch(`/api/sensor?category=${encodeURIComponent(category)}&index=${index}`, { method: 'DELETE' });
+            const result = await res.json();
+            if (result.success) loadSensors();
+        } catch (err) { console.error(err); }
+    }
+
+    async function uploadFullFile(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = async function(event) {
+            try {
+                const json = JSON.parse(event.target.result);
+                await fetch('/api/save-all', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(json)
+                });
+                document.getElementById('message').style.color = 'green';
+                document.getElementById('message').innerText = 'Dosya yüklendi!';
+                loadSensors();
+            } catch (err) { alert('Geçersiz JSON!'); }
+        };
+        reader.readAsText(file);
+    }
+
+    handleProtocolChange();
+</script>
+
+</body>
+</html>

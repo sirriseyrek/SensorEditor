@@ -1,0 +1,1537 @@
+{
+  "Flowmeters": [
+    {
+      "maker": "Endress",
+      "model": "P100",
+      "protocol": "MODBUSTCP",
+      "ipaddress": "192.168.0.231",
+      "port": "RS485",
+      "baud": "9600 8E1",
+      "simulate": "TCP",
+      "unitid": "1",
+      "funcioncode": "3",
+      "type": "Mass",
+      "fields": [
+        {
+          "id": 1,
+          "name": "mass",
+          "address": "2007",
+          "data": "float",
+          "byteorder": "1032",
+          "min": 0,
+          "max": 100
+        },
+        {
+          "id": 2,
+          "name": "temperature",
+          "address": "2017",
+          "data": "float",
+          "byteorder": "1032",
+          "min": 0,
+          "max": 100
+        },
+        {
+          "id": 3,
+          "name": "density",
+          "address": "2013",
+          "data": "float",
+          "byteorder": "1032",
+          "min": 0,
+          "max": 100
+        },
+        {
+          "id": 4,
+          "name": "counter",
+          "address": "2610",
+          "data": "float",
+          "byteorder": "1032",
+          "overflow": "counteroverflow",
+          "overflowscale": 10000000,
+          "min": 0,
+          "max": 100
+        },
+        {
+          "id": 5,
+          "name": "counteroverflow",
+          "address": "2612",
+          "data": "float",
+          "byteorder": "1032",
+          "min": 0,
+          "max": 100
+        },
+        {
+          "id": 6,
+          "name": "totalizer1",
+          "address": "2810",
+          "data": "float",
+          "byteorder": "1032",
+          "overflow": "tot1overflow",
+          "overflowscale": 10000000,
+          "min": 0,
+          "max": 100
+        },
+        {
+          "id": 7,
+          "name": "tot1overflow",
+          "address": "2812",
+          "data": "float",
+          "byteorder": "1032",
+          "min": 0,
+          "max": 100
+        },
+        {
+          "id": 8,
+          "name": "totalizer2",
+          "address": "3010",
+          "data": "float",
+          "byteorder": "1032",
+          "overflow": "tot2overflow",
+          "overflowscale": 10000000,
+          "min": 0,
+          "max": 100
+        },
+        {
+          "id": 9,
+          "name": "tot2overflow",
+          "address": "3012",
+          "data": "float",
+          "byteorder": "1032",
+          "min": 0,
+          "max": 100
+        }
+      ],
+      "setup": [
+        {
+          "id": 1,
+          "name": "direction",
+          "address": "5501",
+          "data": "integer",
+          "byteorder": "10",
+          "desc": "Flow direction relative to the sensor arrow",
+          "options": {
+            "0": "Arrow",
+            "1": "Against"
+          },
+          "readonly": false,
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": 2,
+          "name": "flowdamping",
+          "address": "5510",
+          "data": "float",
+          "byteorder": "1032",
+          "desc": "Flow damping time in seconds",
+          "unit": "s",
+          "readonly": false,
+          "min": 0,
+          "max": 100
+        },
+        {
+          "id": 3,
+          "name": "lowcutoffon",
+          "address": "5138",
+          "data": "float",
+          "byteorder": "1032",
+          "desc": "Low cut-off on value",
+          "readonly": false,
+          "min": 0,
+          "max": 500
+        },
+        {
+          "id": 4,
+          "name": "lowcutoffoff",
+          "address": "5104",
+          "data": "float",
+          "byteorder": "1032",
+          "desc": "Low cut-off off point in percent",
+          "unit": "%",
+          "readonly": false,
+          "min": 0,
+          "max": 100
+        },
+        {
+          "id": 5,
+          "name": "resetalltot",
+          "address": "2609",
+          "data": "integer",
+          "byteorder": "10",
+          "desc": "Reset all totalizers",
+          "options": {
+            "0": "cancel",
+            "1": "reset+tot"
+          },
+          "readonly": false,
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": 6,
+          "name": "resetcounter",
+          "address": "2608",
+          "data": "integer",
+          "byteorder": "10",
+          "desc": "Counter behaviour when reset",
+          "options": {
+            "0": "Totalize",
+            "1": "reset+tot",
+            "2": "Preset+hold",
+            "3": "Reset+hold",
+            "4": "Preset+tot"
+          },
+          "readonly": false,
+          "min": 0,
+          "max": 4
+        },
+        {
+          "id": 7,
+          "name": "resettot1",
+          "address": "2808",
+          "data": "integer",
+          "byteorder": "10",
+          "desc": "Totalizer 1 behaviour when reset",
+          "options": {
+            "0": "Totalize",
+            "1": "reset+tot",
+            "2": "Preset+hold",
+            "3": "Reset+hold",
+            "4": "Preset+tot"
+          },
+          "readonly": false,
+          "min": 0,
+          "max": 4
+        },
+        {
+          "id": 8,
+          "name": "resettot2",
+          "address": "3008",
+          "data": "integer",
+          "byteorder": "10",
+          "desc": "Totalizer 2 behaviour when reset",
+          "options": {
+            "0": "Totalize",
+            "1": "reset+tot",
+            "2": "Preset+hold",
+            "3": "Reset+hold",
+            "4": "Preset+tot"
+          },
+          "readonly": false,
+          "min": 0,
+          "max": 4
+        }
+      ]
+    },
+    {
+      "maker": "Emerson",
+      "model": "Micro Motion",
+      "protocol": "MODBUSRTU",
+      "port": "RS485",
+      "baud": "9600 8N1",
+      "simulate": "RTU",
+      "unitid": "1",
+      "funcioncode": "3",
+      "addressbase": 1,
+      "type": "Mass",
+      "fields": [
+        {
+          "id": 1,
+          "name": "mass",
+          "address": "247",
+          "data": "float",
+          "byteorder": "2301"
+        },
+        {
+          "id": 2,
+          "name": "density",
+          "address": "249",
+          "data": "float",
+          "byteorder": "2301"
+        },
+        {
+          "id": 3,
+          "name": "temperature",
+          "address": "251",
+          "data": "float",
+          "byteorder": "2301"
+        },
+        {
+          "id": 4,
+          "name": "volume",
+          "address": "253",
+          "data": "float",
+          "byteorder": "2301"
+        },
+        {
+          "id": 5,
+          "name": "masstotal",
+          "address": "259",
+          "data": "float",
+          "byteorder": "2301"
+        },
+        {
+          "id": 6,
+          "name": "volumetotal",
+          "address": "261",
+          "data": "float",
+          "byteorder": "2301"
+        }
+      ],
+      "setup": []
+    }
+  ],
+  "Powermeters": [
+    {
+      "maker": "Schneider",
+      "addressbase": 1,
+      "model": "PM5560",
+      "protocol": "MODBUSTCP",
+      "ipaddress": "192.168.0.240",
+      "unitid": "1",
+      "funcioncode": "3",
+      "type": "Multimeter",
+      "fields": [
+        {
+          "id": 1,
+          "name": "voltage",
+          "unit": "V",
+          "address": "3026",
+          "data": "float",
+          "byteorder": "0123",
+          "min": 0,
+          "max": 600
+        },
+        {
+          "id": 2,
+          "name": "power",
+          "unit": "kW",
+          "address": "3060",
+          "data": "float",
+          "byteorder": "0123",
+          "min": 0,
+          "max": 1000
+        },
+        {
+          "id": 3,
+          "name": "current",
+          "unit": "A",
+          "address": "3010",
+          "data": "float",
+          "byteorder": "0123",
+          "min": 0,
+          "max": 1500
+        },
+        {
+          "id": 4,
+          "name": "cosphi",
+          "decode": "pf",
+          "unit": "pf",
+          "address": "3084",
+          "data": "float",
+          "byteorder": "0123",
+          "min": -1,
+          "max": 1
+        }
+      ],
+      "setup": []
+    },
+    {
+      "maker": "Acrel",
+      "model": "APM521",
+      "protocol": "MODBUSTCP",
+      "type": "Multimeter",
+      "ipaddress": "192.168.0.240",
+      "unitid": "1",
+      "funcioncode": "3",
+      "fields": [
+        {
+          "id": 1,
+          "name": "Voltage",
+          "address": "8248",
+          "data": "float",
+          "byteorder": "0123",
+          "unit": "V",
+          "min": 0,
+          "max": 600
+        },
+        {
+          "id": 2,
+          "name": "KW",
+          "address": "8474",
+          "data": "float",
+          "byteorder": "0123",
+          "unit": "kW",
+          "min": 0,
+          "max": 1000
+        },
+        {
+          "id": 3,
+          "name": "Current",
+          "address": "8250",
+          "data": "float",
+          "byteorder": "0123",
+          "unit": "A",
+          "min": 0,
+          "max": 3000
+        },
+        {
+          "id": 4,
+          "name": "CosPhi",
+          "address": "8498",
+          "data": "float",
+          "byteorder": "0123",
+          "unit": "pf",
+          "min": -1,
+          "max": 1
+        }
+      ],
+      "setup": []
+    }
+  ],
+  "Shaftmeters": [
+    {
+      "maker": "Trelleborg",
+      "model": "TSX5",
+      "protocol": "NMEA0183",
+      "port": "RS422",
+      "baud": "4800 8N1",
+      "type": "SPM",
+      "simulate": "NMEA",
+      "sentences": [
+        {
+          "header": "$PSTKTSX5",
+          "fields": [
+            {
+              "key": "rpm",
+              "field_index": 1,
+              "type": "float",
+              "unit": "rev/min"
+            },
+            {
+              "key": "torque",
+              "field_index": 2,
+              "type": "float",
+              "unit": "kNm"
+            },
+            {
+              "key": "thrust",
+              "field_index": 3,
+              "type": "float",
+              "unit": "kN"
+            },
+            {
+              "key": "power",
+              "field_index": 4,
+              "type": "float",
+              "unit": "kW"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "maker": "Danalec Kyma Nmea",
+      "model": "KDU-220",
+      "protocol": "NMEA0183",
+      "port": "RS422",
+      "baud": "4800 8N1",
+      "type": "SPM",
+      "simulate": "NMEA",
+      "sentences": [
+        {
+          "header": "$IIXDR",
+          "fields": [
+            {
+              "key": "rpm",
+              "field_index": 2,
+              "type": "float",
+              "unit": "rpm"
+            },
+            {
+              "key": "torque",
+              "field_index": 6,
+              "type": "float",
+              "unit": "kNm"
+            },
+            {
+              "key": "power",
+              "field_index": 10,
+              "type": "float",
+              "unit": "kW"
+            },
+            {
+              "key": "thrust",
+              "field_index": 14,
+              "type": "float",
+              "unit": "kN"
+            },
+            {
+              "key": "total_revolutions",
+              "field_index": 18,
+              "type": "float",
+              "unit": "revolutions"
+            },
+            {
+              "key": "total_energy",
+              "field_index": 22,
+              "type": "float",
+              "unit": "kWh"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "GPS": [
+    {
+      "maker": "JRC",
+      "model": "JLR-7700",
+      "protocol": "NMEA0183",
+      "port": "RS422",
+      "baud": "4800 8N1",
+      "type": "GPS",
+      "simulate": "NMEA",
+      "sentences": [
+        {
+          "header": "$GPRMC",
+          "fields": [
+            {
+              "key": "utc_time",
+              "field_index": 1,
+              "type": "string"
+            },
+            {
+              "key": "status",
+              "field_index": 2,
+              "type": "string"
+            },
+            {
+              "key": "latitude",
+              "field_index": 3,
+              "type": "string"
+            },
+            {
+              "key": "lat_dir",
+              "field_index": 4,
+              "type": "string"
+            },
+            {
+              "key": "longitude",
+              "field_index": 5,
+              "type": "string"
+            },
+            {
+              "key": "lon_dir",
+              "field_index": 6,
+              "type": "string"
+            },
+            {
+              "key": "speed",
+              "field_index": 7,
+              "type": "float",
+              "unit": "knots"
+            },
+            {
+              "key": "course",
+              "field_index": 8,
+              "type": "float",
+              "unit": "deg"
+            },
+            {
+              "key": "date",
+              "field_index": 9,
+              "type": "string"
+            },
+            {
+              "key": "mag_var",
+              "field_index": 10,
+              "type": "float",
+              "unit": "deg"
+            },
+            {
+              "key": "mag_dir",
+              "field_index": 11,
+              "type": "string"
+            },
+            {
+              "key": "mode",
+              "field_index": 12,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "header": "$GPGGA",
+          "fields": [
+            {
+              "key": "utc_time",
+              "field_index": 1,
+              "type": "string"
+            },
+            {
+              "key": "latitude",
+              "field_index": 2,
+              "type": "string"
+            },
+            {
+              "key": "lat_dir",
+              "field_index": 3,
+              "type": "string"
+            },
+            {
+              "key": "longitude",
+              "field_index": 4,
+              "type": "string"
+            },
+            {
+              "key": "lon_dir",
+              "field_index": 5,
+              "type": "string"
+            },
+            {
+              "key": "fix_quality",
+              "field_index": 6,
+              "type": "integer"
+            },
+            {
+              "key": "satellites",
+              "field_index": 7,
+              "type": "integer"
+            },
+            {
+              "key": "hdop",
+              "field_index": 8,
+              "type": "float"
+            },
+            {
+              "key": "altitude",
+              "field_index": 9,
+              "type": "float",
+              "unit": "m"
+            },
+            {
+              "key": "geoid_sep",
+              "field_index": 11,
+              "type": "float",
+              "unit": "m"
+            }
+          ]
+        },
+        {
+          "header": "$GPGLL",
+          "fields": [
+            {
+              "key": "latitude",
+              "field_index": 1,
+              "type": "string"
+            },
+            {
+              "key": "lat_dir",
+              "field_index": 2,
+              "type": "string"
+            },
+            {
+              "key": "longitude",
+              "field_index": 3,
+              "type": "string"
+            },
+            {
+              "key": "lon_dir",
+              "field_index": 4,
+              "type": "string"
+            },
+            {
+              "key": "utc_time",
+              "field_index": 5,
+              "type": "string"
+            },
+            {
+              "key": "status",
+              "field_index": 6,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "header": "$GPVTG",
+          "fields": [
+            {
+              "key": "course_true",
+              "field_index": 1,
+              "type": "float",
+              "unit": "deg"
+            },
+            {
+              "key": "course_mag",
+              "field_index": 3,
+              "type": "float",
+              "unit": "deg"
+            },
+            {
+              "key": "speed_knots",
+              "field_index": 5,
+              "type": "float",
+              "unit": "knots"
+            },
+            {
+              "key": "speed_kmh",
+              "field_index": 7,
+              "type": "float",
+              "unit": "km/h"
+            }
+          ]
+        },
+        {
+          "header": "$GPZDA",
+          "fields": [
+            {
+              "key": "utc_time",
+              "field_index": 1,
+              "type": "string"
+            },
+            {
+              "key": "day",
+              "field_index": 2,
+              "type": "integer"
+            },
+            {
+              "key": "month",
+              "field_index": 3,
+              "type": "integer"
+            },
+            {
+              "key": "year",
+              "field_index": 4,
+              "type": "integer"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "maker": "Furuno",
+      "model": "GP32",
+      "protocol": "NMEA0183",
+      "port": "RS422",
+      "baud": "4800 8N1",
+      "type": "GPS",
+      "simulate": "NMEA",
+      "sentences": [
+        {
+          "header": "$GPRMC",
+          "fields": [
+            {
+              "key": "utc_time",
+              "field_index": 1,
+              "type": "string",
+              "unit": "hhmmss.ss"
+            },
+            {
+              "key": "status",
+              "field_index": 2,
+              "type": "string",
+              "unit": ""
+            },
+            {
+              "key": "latitude",
+              "field_index": 3,
+              "type": "float",
+              "unit": "DDMM.MMM"
+            },
+            {
+              "key": "lat_direction",
+              "field_index": 4,
+              "type": "string",
+              "unit": ""
+            },
+            {
+              "key": "longitude",
+              "field_index": 5,
+              "type": "float",
+              "unit": "DDDMM.MMM"
+            },
+            {
+              "key": "lon_direction",
+              "field_index": 6,
+              "type": "string",
+              "unit": ""
+            },
+            {
+              "key": "sog",
+              "field_index": 7,
+              "type": "float",
+              "unit": "knots"
+            },
+            {
+              "key": "cog",
+              "field_index": 8,
+              "type": "float",
+              "unit": "degrees"
+            },
+            {
+              "key": "date",
+              "field_index": 9,
+              "type": "string",
+              "unit": "DDMMYY"
+            },
+            {
+              "key": "magnetic_variation",
+              "field_index": 10,
+              "type": "float",
+              "unit": "degrees"
+            },
+            {
+              "key": "variation_direction",
+              "field_index": 11,
+              "type": "string",
+              "unit": ""
+            },
+            {
+              "key": "mode",
+              "field_index": 12,
+              "type": "string",
+              "unit": ""
+            }
+          ]
+        },
+        {
+          "header": "$GPVTG",
+          "fields": [
+            {
+              "key": "true_track",
+              "field_index": 1,
+              "type": "float",
+              "unit": "degrees"
+            },
+            {
+              "key": "sog_knots",
+              "field_index": 5,
+              "type": "float",
+              "unit": "knots"
+            },
+            {
+              "key": "sog_kph",
+              "field_index": 7,
+              "type": "float",
+              "unit": "km/h"
+            },
+            {
+              "key": "mode",
+              "field_index": 9,
+              "type": "string",
+              "unit": ""
+            }
+          ]
+        },
+        {
+          "header": "$GPGLL",
+          "fields": [
+            {
+              "key": "latitude",
+              "field_index": 1,
+              "type": "float",
+              "unit": "DDMM.MMM"
+            },
+            {
+              "key": "lat_direction",
+              "field_index": 2,
+              "type": "string",
+              "unit": ""
+            },
+            {
+              "key": "longitude",
+              "field_index": 3,
+              "type": "float",
+              "unit": "DDDMM.MMM"
+            },
+            {
+              "key": "lon_direction",
+              "field_index": 4,
+              "type": "string",
+              "unit": ""
+            },
+            {
+              "key": "utc_time",
+              "field_index": 5,
+              "type": "string",
+              "unit": "hhmmss.ss"
+            },
+            {
+              "key": "status",
+              "field_index": 6,
+              "type": "string",
+              "unit": ""
+            },
+            {
+              "key": "mode",
+              "field_index": 7,
+              "type": "string",
+              "unit": ""
+            }
+          ]
+        },
+        {
+          "header": "$GPZDA",
+          "fields": [
+            {
+              "key": "utc_time",
+              "field_index": 1,
+              "type": "string",
+              "unit": "hhmmss.ss"
+            },
+            {
+              "key": "day",
+              "field_index": 2,
+              "type": "integer",
+              "unit": "day"
+            },
+            {
+              "key": "month",
+              "field_index": 3,
+              "type": "integer",
+              "unit": "month"
+            },
+            {
+              "key": "year",
+              "field_index": 4,
+              "type": "integer",
+              "unit": "year"
+            },
+            {
+              "key": "local_zone_hours",
+              "field_index": 5,
+              "type": "integer",
+              "unit": "hours"
+            },
+            {
+              "key": "local_zone_minutes",
+              "field_index": 6,
+              "type": "integer",
+              "unit": "minutes"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "maker": "Furuno",
+      "model": "GP170",
+      "protocol": "NMEA0183",
+      "port": "RS422",
+      "baud": "4800 8N1",
+      "type": "GNSS",
+      "simulate": "NMEA",
+      "sentences": [
+        {
+          "header": "$GPRMC",
+          "fields": [
+            {
+              "key": "utc_time",
+              "field_index": 1,
+              "type": "string",
+              "unit": "hhmmss.ss"
+            },
+            {
+              "key": "status",
+              "field_index": 2,
+              "type": "string",
+              "unit": ""
+            },
+            {
+              "key": "latitude",
+              "field_index": 3,
+              "type": "float",
+              "unit": "DDMM.MMM"
+            },
+            {
+              "key": "lat_direction",
+              "field_index": 4,
+              "type": "string",
+              "unit": ""
+            },
+            {
+              "key": "longitude",
+              "field_index": 5,
+              "type": "float",
+              "unit": "DDDMM.MMM"
+            },
+            {
+              "key": "lon_direction",
+              "field_index": 6,
+              "type": "string",
+              "unit": ""
+            },
+            {
+              "key": "sog",
+              "field_index": 7,
+              "type": "float",
+              "unit": "knots"
+            },
+            {
+              "key": "cog",
+              "field_index": 8,
+              "type": "float",
+              "unit": "degrees"
+            },
+            {
+              "key": "date",
+              "field_index": 9,
+              "type": "string",
+              "unit": "DDMMYY"
+            },
+            {
+              "key": "magnetic_variation",
+              "field_index": 10,
+              "type": "float",
+              "unit": "degrees"
+            },
+            {
+              "key": "variation_direction",
+              "field_index": 11,
+              "type": "string",
+              "unit": ""
+            },
+            {
+              "key": "mode",
+              "field_index": 12,
+              "type": "string",
+              "unit": ""
+            }
+          ]
+        },
+        {
+          "header": "$GPVTG",
+          "fields": [
+            {
+              "key": "true_track",
+              "field_index": 1,
+              "type": "float",
+              "unit": "degrees"
+            },
+            {
+              "key": "sog_knots",
+              "field_index": 5,
+              "type": "float",
+              "unit": "knots"
+            },
+            {
+              "key": "sog_kph",
+              "field_index": 7,
+              "type": "float",
+              "unit": "km/h"
+            },
+            {
+              "key": "mode",
+              "field_index": 9,
+              "type": "string",
+              "unit": ""
+            }
+          ]
+        },
+        {
+          "header": "$GPGNS",
+          "fields": [
+            {
+              "key": "utc_time",
+              "field_index": 1,
+              "type": "string",
+              "unit": "hhmmss.ss"
+            },
+            {
+              "key": "latitude",
+              "field_index": 2,
+              "type": "float",
+              "unit": "DDMM.MMM"
+            },
+            {
+              "key": "lat_direction",
+              "field_index": 3,
+              "type": "string",
+              "unit": ""
+            },
+            {
+              "key": "longitude",
+              "field_index": 4,
+              "type": "float",
+              "unit": "DDDMM.MMM"
+            },
+            {
+              "key": "lon_direction",
+              "field_index": 5,
+              "type": "string",
+              "unit": ""
+            },
+            {
+              "key": "mode_indicator",
+              "field_index": 6,
+              "type": "string",
+              "unit": ""
+            },
+            {
+              "key": "satellites_in_use",
+              "field_index": 7,
+              "type": "integer",
+              "unit": "count"
+            },
+            {
+              "key": "hdop",
+              "field_index": 8,
+              "type": "float",
+              "unit": ""
+            },
+            {
+              "key": "antenna_altitude",
+              "field_index": 9,
+              "type": "float",
+              "unit": "meters"
+            },
+            {
+              "key": "geoidal_separation",
+              "field_index": 10,
+              "type": "float",
+              "unit": "meters"
+            }
+          ]
+        },
+        {
+          "header": "$GPGGA",
+          "fields": [
+            {
+              "key": "utc_time",
+              "field_index": 1,
+              "type": "string",
+              "unit": "hhmmss.ss"
+            },
+            {
+              "key": "latitude",
+              "field_index": 2,
+              "type": "float",
+              "unit": "DDMM.MMM"
+            },
+            {
+              "key": "lat_direction",
+              "field_index": 3,
+              "type": "string",
+              "unit": ""
+            },
+            {
+              "key": "longitude",
+              "field_index": 4,
+              "type": "float",
+              "unit": "DDDMM.MMM"
+            },
+            {
+              "key": "lon_direction",
+              "field_index": 5,
+              "type": "string",
+              "unit": ""
+            },
+            {
+              "key": "gps_quality",
+              "field_index": 6,
+              "type": "integer",
+              "unit": ""
+            },
+            {
+              "key": "satellites_in_use",
+              "field_index": 7,
+              "type": "integer",
+              "unit": "count"
+            },
+            {
+              "key": "hdop",
+              "field_index": 8,
+              "type": "float",
+              "unit": ""
+            },
+            {
+              "key": "antenna_altitude",
+              "field_index": 9,
+              "type": "float",
+              "unit": "meters"
+            },
+            {
+              "key": "geoidal_separation",
+              "field_index": 11,
+              "type": "float",
+              "unit": "meters"
+            }
+          ]
+        },
+        {
+          "header": "$GPZDA",
+          "fields": [
+            {
+              "key": "utc_time",
+              "field_index": 1,
+              "type": "string",
+              "unit": "hhmmss.ss"
+            },
+            {
+              "key": "day",
+              "field_index": 2,
+              "type": "integer",
+              "unit": "day"
+            },
+            {
+              "key": "month",
+              "field_index": 3,
+              "type": "integer",
+              "unit": "month"
+            },
+            {
+              "key": "year",
+              "field_index": 4,
+              "type": "integer",
+              "unit": "year"
+            },
+            {
+              "key": "local_zone_hours",
+              "field_index": 5,
+              "type": "integer",
+              "unit": "hours"
+            },
+            {
+              "key": "local_zone_minutes",
+              "field_index": 6,
+              "type": "integer",
+              "unit": "minutes"
+            }
+          ]
+        },
+        {
+          "header": "$GNGNS",
+          "fields": [
+            {
+              "key": "utc_time",
+              "field_index": 1,
+              "type": "string",
+              "unit": "hhmmss.ss"
+            },
+            {
+              "key": "latitude",
+              "field_index": 2,
+              "type": "float",
+              "unit": "DDMM.MMM"
+            },
+            {
+              "key": "lat_direction",
+              "field_index": 3,
+              "type": "string",
+              "unit": ""
+            },
+            {
+              "key": "longitude",
+              "field_index": 4,
+              "type": "float",
+              "unit": "DDDMM.MMM"
+            },
+            {
+              "key": "lon_direction",
+              "field_index": 5,
+              "type": "string",
+              "unit": ""
+            },
+            {
+              "key": "mode_indicator",
+              "field_index": 6,
+              "type": "string",
+              "unit": ""
+            },
+            {
+              "key": "satellites_in_use",
+              "field_index": 7,
+              "type": "integer",
+              "unit": "count"
+            },
+            {
+              "key": "hdop",
+              "field_index": 8,
+              "type": "float",
+              "unit": ""
+            },
+            {
+              "key": "antenna_altitude",
+              "field_index": 9,
+              "type": "float",
+              "unit": "meters"
+            },
+            {
+              "key": "geoidal_separation",
+              "field_index": 10,
+              "type": "float",
+              "unit": "meters"
+            },
+            {
+              "key": "diff_data_age",
+              "field_index": 11,
+              "type": "float",
+              "unit": "sec"
+            },
+            {
+              "key": "diff_station_id",
+              "field_index": 12,
+              "type": "integer",
+              "unit": ""
+            }
+          ]
+        },
+        {
+          "header": "$GPGNS",
+          "fields": [
+            {
+              "key": "utc_time",
+              "field_index": 1,
+              "type": "string",
+              "unit": "hhmmss.ss"
+            },
+            {
+              "key": "latitude",
+              "field_index": 2,
+              "type": "float",
+              "unit": "DDMM.MMM"
+            },
+            {
+              "key": "lat_direction",
+              "field_index": 3,
+              "type": "string",
+              "unit": ""
+            },
+            {
+              "key": "longitude",
+              "field_index": 4,
+              "type": "float",
+              "unit": "DDDMM.MMM"
+            },
+            {
+              "key": "lon_direction",
+              "field_index": 5,
+              "type": "string",
+              "unit": ""
+            },
+            {
+              "key": "mode_indicator",
+              "field_index": 6,
+              "type": "string",
+              "unit": ""
+            },
+            {
+              "key": "satellites_in_use",
+              "field_index": 7,
+              "type": "integer",
+              "unit": "count"
+            },
+            {
+              "key": "hdop",
+              "field_index": 8,
+              "type": "float",
+              "unit": ""
+            },
+            {
+              "key": "antenna_altitude",
+              "field_index": 9,
+              "type": "float",
+              "unit": "meters"
+            },
+            {
+              "key": "geoidal_separation",
+              "field_index": 10,
+              "type": "float",
+              "unit": "meters"
+            },
+            {
+              "key": "diff_data_age",
+              "field_index": 11,
+              "type": "float",
+              "unit": "sec"
+            },
+            {
+              "key": "diff_station_id",
+              "field_index": 12,
+              "type": "integer",
+              "unit": ""
+            }
+          ]
+        },
+        {
+          "header": "$GPGGA",
+          "fields": [
+            {
+              "key": "utc_time",
+              "field_index": 1,
+              "type": "string",
+              "unit": "hhmmss.ss"
+            },
+            {
+              "key": "latitude",
+              "field_index": 2,
+              "type": "float",
+              "unit": "DDMM.MMM"
+            },
+            {
+              "key": "lat_direction",
+              "field_index": 3,
+              "type": "string",
+              "unit": ""
+            },
+            {
+              "key": "longitude",
+              "field_index": 4,
+              "type": "float",
+              "unit": "DDDMM.MMM"
+            },
+            {
+              "key": "lon_direction",
+              "field_index": 5,
+              "type": "string",
+              "unit": ""
+            },
+            {
+              "key": "gps_quality",
+              "field_index": 6,
+              "type": "integer",
+              "unit": ""
+            },
+            {
+              "key": "satellites_in_use",
+              "field_index": 7,
+              "type": "integer",
+              "unit": "count"
+            },
+            {
+              "key": "hdop",
+              "field_index": 8,
+              "type": "float",
+              "unit": ""
+            },
+            {
+              "key": "antenna_altitude",
+              "field_index": 9,
+              "type": "float",
+              "unit": "meters"
+            },
+            {
+              "key": "geoidal_separation",
+              "field_index": 11,
+              "type": "float",
+              "unit": "meters"
+            },
+            {
+              "key": "diff_data_age",
+              "field_index": 13,
+              "type": "float",
+              "unit": "sec"
+            },
+            {
+              "key": "diff_station_id",
+              "field_index": 14,
+              "type": "integer",
+              "unit": ""
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "SPEEDLOG": [
+    {
+      "maker": "Furuno",
+      "model": "DS80",
+      "protocol": "NMEA0183",
+      "port": "RS422",
+      "baud": "4800 8N1",
+      "type": "SPEEDLOG",
+      "simulate": "NMEA",
+      "sentences": [
+        {
+          "header": "$VDVLW",
+          "fields": [
+            {
+              "key": "total_cumulative_water_distance",
+              "field_index": 1,
+              "type": "float",
+              "unit": "NM"
+            },
+            {
+              "key": "water_distance_since_reset",
+              "field_index": 3,
+              "type": "float",
+              "unit": "NM"
+            },
+            {
+              "key": "total_cumulative_ground_distance",
+              "field_index": 5,
+              "type": "float",
+              "unit": "NM"
+            },
+            {
+              "key": "ground_distance_since_reset",
+              "field_index": 7,
+              "type": "float",
+              "unit": "NM"
+            }
+          ]
+        },
+        {
+          "header": "$VDVBW",
+          "fields": [
+            {
+              "key": "longitudinal_water_speed",
+              "field_index": 1,
+              "type": "float",
+              "unit": "knots"
+            },
+            {
+              "key": "transverse_water_speed",
+              "field_index": 2,
+              "type": "float",
+              "unit": "knots"
+            },
+            {
+              "key": "water_speed_status",
+              "field_index": 3,
+              "type": "string",
+              "unit": ""
+            },
+            {
+              "key": "longitudinal_ground_speed",
+              "field_index": 4,
+              "type": "float",
+              "unit": "knots"
+            },
+            {
+              "key": "transverse_ground_speed",
+              "field_index": 5,
+              "type": "float",
+              "unit": "knots"
+            },
+            {
+              "key": "ground_speed_status",
+              "field_index": 6,
+              "type": "string",
+              "unit": ""
+            },
+            {
+              "key": "stern_transverse_water_speed",
+              "field_index": 7,
+              "type": "float",
+              "unit": "knots"
+            },
+            {
+              "key": "stern_water_speed_status",
+              "field_index": 8,
+              "type": "string",
+              "unit": ""
+            },
+            {
+              "key": "stern_ground_speed_status",
+              "field_index": 9,
+              "type": "string",
+              "unit": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
